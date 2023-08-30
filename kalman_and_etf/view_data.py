@@ -4,7 +4,7 @@ import pandas as pd
 
 def draw_date_coloured_scatterplot(etfs, prices):
     plen = len(prices)
-    colour_map = plt.colormaps['YlOrRd']
+    colour_map = plt.colormaps['Blues']
     colours = np.linspace(0.1, 1, plen)
 
     # Create the scatterplot object
@@ -15,7 +15,7 @@ def draw_date_coloured_scatterplot(etfs, prices):
     # Add a colour bar for the date colouring and set the
     # corresponding axis tick labels to equal string-formatted dates
     colourbar = plt.colorbar(scatterplot)
-    #colourbar.ax.set_yticklabels([str(p.date()) for p in prices[::plen//9].index])
+    colourbar.ax.set_yticklabels([p for p in begin_end_date[::plen//9]])
     plt.xlabel(prices.columns[0])
     plt.ylabel(prices.columns[1])
     plt.show()
@@ -33,4 +33,5 @@ etf_10 = pd.read_csv('etf_10.csv')
 prices = pd.DataFrame(index=etf_5.index)
 prices[etfs[0]] = etf_5["收盘"]
 prices[etfs[1]] = etf_10["收盘"]
+begin_end_date = etf_5["日期"]
 draw_date_coloured_scatterplot(etfs, prices)
